@@ -189,7 +189,8 @@ public class AsteroidsApplication extends Application {
         }.start();
         
         stage.setTitle("Asteroids!"); 
-        stage.setScene(scene);
+        stage.setResizable(false);
+	stage.setScene(scene);
         stage.show();
     }
 
