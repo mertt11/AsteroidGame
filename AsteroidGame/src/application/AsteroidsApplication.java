@@ -67,6 +67,7 @@ public class AsteroidsApplication extends Application {
     public static int HEIGHT = 200;
     @Override
     public void start(Stage stage) throws Exception {
+        
         Pane pane = new Pane();
         Text text = new Text(10, 20, "Points: 0");
         pane.getChildren().add(text);
@@ -82,22 +83,16 @@ public class AsteroidsApplication extends Application {
         	Random random=new Random();
         	Asteroid asteroid=new Asteroid(random.nextInt(WIDTH / 3), random.nextInt(HEIGHT));
         	asteroids.add(asteroid);
-        }
-        
-        
+        }     
         
         pane.getChildren().add(ship.getCharacter());
-        asteroids.forEach(asteroid -> pane.getChildren().add(asteroid.getCharacter()));
-        
+        asteroids.forEach(asteroid -> pane.getChildren().add(asteroid.getCharacter()));  
         asteroids.forEach(asteroid -> asteroid.turnRight());
         asteroids.forEach(asteroid -> asteroid.accelerate());
-        
-        
+       
         Scene scene = new Scene(pane);
         
         Map<KeyCode, Boolean> pressedKeys = new HashMap<>();
-        
-
         
         scene.setOnKeyPressed(event -> {
             pressedKeys.put(event.getCode(), Boolean.TRUE);
@@ -110,8 +105,6 @@ public class AsteroidsApplication extends Application {
             @Override
             
             public void handle(long now) {
-
-
 
                 if (pressedKeys.getOrDefault(KeyCode.LEFT, false)) {
                     ship.turnLeft();
@@ -146,6 +139,7 @@ public class AsteroidsApplication extends Application {
                         stop();
                     }
                 });
+
                 projectiles.forEach(projectile -> {
                     asteroids.forEach(asteroid -> {
                         if (projectile.collide(asteroid)) {
@@ -158,25 +152,23 @@ public class AsteroidsApplication extends Application {
                         text.setText("Points: " + points.addAndGet(1000));
                     }
                 });
-
                       
                 projectiles.stream()
                 .filter(projectile -> !projectile.isAlive())
                 .forEach(projectile -> pane.getChildren().remove(projectile.getCharacter()));
             
-            projectiles.removeAll(projectiles.stream()
+                projectiles.removeAll(projectiles.stream()
                 .filter(projectile -> !projectile.isAlive())
                 .collect(Collectors.toList()));
 
-            asteroids.stream()
+                asteroids.stream()
                 .filter(asteroid -> !asteroid.isAlive())
                 .forEach(asteroid -> pane.getChildren().remove(asteroid.getCharacter()));
 
-            asteroids.removeAll(asteroids.stream()
+                asteroids.removeAll(asteroids.stream()
                 .filter(asteroid -> !asteroid.isAlive())
                 .collect(Collectors.toList()));
-                
-            
+                 
                 if(Math.random() < 0.01) {
                     Asteroid asteroid = new Asteroid(WIDTH, HEIGHT);
                     if (!asteroid.collide(ship)) {
@@ -190,7 +182,7 @@ public class AsteroidsApplication extends Application {
         
         stage.setTitle("Asteroids!"); 
         stage.setResizable(false);
-	stage.setScene(scene);
+	    stage.setScene(scene);
         stage.show();
     }
 
